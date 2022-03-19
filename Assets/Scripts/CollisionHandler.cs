@@ -7,23 +7,57 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+    [SerializeField] protected float levelLoadDelay = 1f;
+    [SerializeField] private AudioClip crash;
+    [SerializeField] private AudioClip success;
+
+    AudioSource audioSource;
+    private bool isTransitioning = false;
+    
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     private void OnCollisionEnter(Collision other)
     {
+        if (isTransitioning)
+        {
+            return;
+        }
         switch (other.gameObject.tag)
         {
             case "Friendly":
                 Debug.Log("Friendly unit");
                 break;
             case "Finish":
-                LoadNextLevel();
+                StartSuccessSequence();
                 break;
             default:
-                ReloadScene();
+                StartCrashSequence();
                 break;
-                
         }
+    }
+    private void StartSuccessSequence()
+    {
+        isTransitioning = true;
+        audioSource.Stop();
+        audioSource.PlayOneShot(success);
+        GetComponent<Movement>().enabled = false;
+        Invoke("LoadNextLevel", levelLoadDelay);
+    }
 
-        void LoadNextLevel()
+    void StartCrashSequence()
+        {
+            isTransitioning = true;
+            audioSource.Stop();
+            // add particle effect upon crash
+            audioSource.PlayOneShot(crash);
+            GetComponent<Movement>().enabled = false;
+            Invoke(nameof(ReloadLevel), levelLoadDelay);
+        }
+    void LoadNextLevel()
         {
             int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
             int nextSceneIndex = currentSceneIndex + 1;
@@ -34,10 +68,9 @@ public class CollisionHandler : MonoBehaviour
             SceneManager.LoadScene(nextSceneIndex);
         }
 
-        void ReloadScene()
+    void ReloadLevel()
         {
             int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
             SceneManager.LoadScene(currentSceneIndex);
         }
-    }
 }

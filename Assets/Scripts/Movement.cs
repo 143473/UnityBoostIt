@@ -8,6 +8,10 @@ public class Movement : MonoBehaviour
     [SerializeField] protected float mainThrust = 1000f;
     [SerializeField] protected float rotateThrust = 1f;
     [SerializeField] protected AudioClip mainEngineAudio;
+
+    [SerializeField] protected ParticleSystem leftThruster;
+    [SerializeField] protected ParticleSystem rightThruster;
+    [SerializeField] protected ParticleSystem mainThruster;
     
     Rigidbody rb;
     AudioSource audioSource;
@@ -28,30 +32,74 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            //deltatime - to make it frame independent, regardless of fps
-            //Add relative force - adds a force relative to its coordinate system
-            rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
-            if (!audioSource.isPlaying)
-            {
-                audioSource.PlayOneShot(mainEngineAudio);
-            }
+            StartThrusting();
         }
         else
         {
-            audioSource.Stop();
+            StopThrusting();
         }
+    }
+    
+    void StartThrusting()
+    {
+        //deltatime - to make it frame independent, regardless of fps
+        //Add relative force - adds a force relative to its coordinate system
+        rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(mainEngineAudio);
+        }
+
+        if (!mainThruster.isPlaying)
+        {
+            mainThruster.Play();
+        }
+    }
+    
+    private void StopThrusting()
+    {
+        audioSource.Stop();
+        mainThruster.Stop();
     }
 
     void ProcessRotation()
     {
         if (Input.GetKey(KeyCode.A))
         {
-            RotateTransform(rotateThrust);
+            RotateLeft();
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            RotateTransform(-rotateThrust);
+            RotateRight();
         }
+        else
+        {
+            StopRotating();
+        }
+    }
+
+    private void RotateRight()
+    {
+        RotateTransform(-rotateThrust);
+        if (!leftThruster.isPlaying)
+        {
+            leftThruster.Play();
+        }
+    }
+
+    private void RotateLeft()
+    {
+        RotateTransform(rotateThrust);
+        if (!rightThruster.isPlaying)
+        {
+            rightThruster.Play();
+        }
+    }
+    
+    private void StopRotating()
+    {
+        rightThruster.Stop();
+        leftThruster.Stop();
     }
 
     void RotateTransform(float rotationThisFrame)
@@ -60,4 +108,6 @@ public class Movement : MonoBehaviour
         transform.Rotate(Vector3.forward * Time.deltaTime * rotationThisFrame);
         rb.freezeRotation = false; // unfreezing rotation so physics take over 
     }
+
+
 }

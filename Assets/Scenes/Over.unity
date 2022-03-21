@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 0f56d7d246999d14a9faea0e4def506f, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -97,8 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: a8b15486104d17c498f2c594b724a923, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 9b961e2d6a031f549a6357c487b65790, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -290,7 +290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4819220652987165349, guid: 519e1fa5b5343f643add9a35498fc4d5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 4819220652987165349, guid: 519e1fa5b5343f643add9a35498fc4d5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -365,8 +365,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -406,13 +406,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.09889579, y: -0, z: -0, w: 0.9950978}
-  m_LocalPosition: {x: 0, y: 8.21, z: -17.57}
+  m_LocalRotation: {x: 0.15503125, y: -0, z: -0, w: 0.98790956}
+  m_LocalPosition: {x: 0, y: 11.9, z: -21.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 11.351, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 17.837, y: 0, z: 0}
 --- !u!1001 &1413906362
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -426,7 +426,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4417258362036355364, guid: 1dd14793524f4ad4382cafda423565db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 4417258362036355364, guid: 1dd14793524f4ad4382cafda423565db, type: 3}
       propertyPath: m_LocalPosition.y
@@ -483,7 +483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1100113663719297678, guid: 766e1467a05ba8c41af0251aa2fab0a8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1100113663719297678, guid: 766e1467a05ba8c41af0251aa2fab0a8, type: 3}
       propertyPath: m_LocalPosition.y

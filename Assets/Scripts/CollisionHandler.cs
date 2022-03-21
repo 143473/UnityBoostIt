@@ -10,9 +10,13 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] protected float levelLoadDelay = 1f;
     [SerializeField] private AudioClip crash;
     [SerializeField] private AudioClip success;
+    
+    [SerializeField] private ParticleSystem crashParticle;
+    [SerializeField] private ParticleSystem successParticle;
 
     AudioSource audioSource;
-    private bool isTransitioning = false;
+    bool isTransitioning = false;
+    private bool collissionDisabled = false;
     
 
     private void Start()
@@ -20,9 +24,26 @@ public class CollisionHandler : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    private void Update()
+    {
+        RespondToDebugKeys();
+    }
+
+    void RespondToDebugKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadNextLevel();
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            collissionDisabled = !collissionDisabled; 
+        }
+    }
+
     private void OnCollisionEnter(Collision other)
     {
-        if (isTransitioning)
+        if (isTransitioning || collissionDisabled)
         {
             return;
         }
@@ -44,18 +65,19 @@ public class CollisionHandler : MonoBehaviour
         isTransitioning = true;
         audioSource.Stop();
         audioSource.PlayOneShot(success);
+        successParticle.Play();
         GetComponent<Movement>().enabled = false;
         Invoke("LoadNextLevel", levelLoadDelay);
     }
 
     void StartCrashSequence()
-        {
-            isTransitioning = true;
-            audioSource.Stop();
-            // add particle effect upon crash
-            audioSource.PlayOneShot(crash);
-            GetComponent<Movement>().enabled = false;
-            Invoke(nameof(ReloadLevel), levelLoadDelay);
+    {
+        isTransitioning = true;
+        audioSource.Stop();
+        audioSource.PlayOneShot(crash);
+        crashParticle.Play();
+        GetComponent<Movement>().enabled = false;
+        Invoke(nameof(ReloadLevel), levelLoadDelay);
         }
     void LoadNextLevel()
         {
